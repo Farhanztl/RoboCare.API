@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Identity;
-using RoboCare.API.Models;
+﻿using RoboCare.API.Models;
 
 namespace RoboCare.API.Data
 {
@@ -15,7 +14,6 @@ namespace RoboCare.API.Data
            new RoboticDevice() {ID = 6,Model = "Flex",SerialNumber = "B1003",LastCalibrationDate = new DateTime(2019,05,10), IsActive = true},
            new RoboticDevice() {ID = 7,Model = "Flex",SerialNumber = "B1004",LastCalibrationDate = new DateTime(2008,08,16), IsActive = false},
            new RoboticDevice() {ID = 8,Model = "SIM",SerialNumber = "A1002",LastCalibrationDate = new DateTime(2020,11,11), IsActive = true}
-
         };
     }
 }

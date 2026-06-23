@@ -1,12 +1,17 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using RoboCare.API.Data;
+using RoboCare.API.Models;
 
 namespace RoboCare.API.Controllers
 {
-    public class RoboticDevicesController : Controller
+
+    [ApiController]
+    public class RoboticDevicesController : ControllerBase
     {
+        [Route("/List")]
         public IActionResult Index()
         {
-            return View();
+             return Ok(MockDataStore.MyData);
         }
     }
 }
