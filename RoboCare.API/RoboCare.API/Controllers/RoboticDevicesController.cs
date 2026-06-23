@@ -25,6 +25,19 @@ namespace RoboCare.API.Controllers
 
             return Ok(foundDevice);
         }
+
+        [Route("/Add")]
+        public IActionResult AddtoDatabase(RoboticDevice devices)
+        {
+             if(!ModelState.IsValid)
+             {
+                string message = string.Join("\n",ModelState.Values.SelectMany(E => E.Errors).Select(E => E.ErrorMessage));
+
+                return BadRequest(message);
+             }
+
+           
+        }
     }
 }
 
