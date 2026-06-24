@@ -10,6 +10,7 @@ namespace RoboCare.API.Controllers
     public class RoboticDevicesController : ControllerBase
     {
         
+        
         [Route("/List")]
         public IActionResult Index()
         {
@@ -26,17 +27,15 @@ namespace RoboCare.API.Controllers
             return Ok(foundDevice);
         }
 
-        [Route("/Add")]
-        public IActionResult AddtoDatabase(RoboticDevice devices)
+        [HttpPost("/Add")]
+        public IActionResult AddToDB(RoboticDevice devices)
         {
-             if(!ModelState.IsValid)
-             {
-                string message = string.Join("\n",ModelState.Values.SelectMany(E => E.Errors).Select(E => E.ErrorMessage));
+            var data = MockDataStore.MyData;
 
-                return BadRequest(message);
-             }
+           data.Add(devices);
 
-           
+           return Ok(" Device Add Successfully! ");
+ 
         }
     }
 }
