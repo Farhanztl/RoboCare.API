@@ -9,20 +9,20 @@ namespace RoboCare.API.Controllers
     [ApiController]
     public class RoboticDevicesController : ControllerBase
     {
-        
-        
+
+
         [Route("/List")]
         public IActionResult Index()
         {
-             return Ok(MockDataStore.MyData);
+            return Ok(MockDataStore.MyData);
         }
 
-        [Route("/List/{ID:range(1,8)}")]
-        public IActionResult IDD(int id)
+        [Route("/List/{ID}")]
+        public IActionResult FoundDB(int id)
         {
             var data = MockDataStore.MyData;
 
-           var foundDevice = data.FirstOrDefault(i => i.ID == id);
+            var foundDevice = data.FirstOrDefault(i => i.ID == id);
 
             return Ok(foundDevice);
         }
@@ -32,10 +32,10 @@ namespace RoboCare.API.Controllers
         {
             var data = MockDataStore.MyData;
 
-           data.Add(devices);
+            data.Add(devices);
 
-           return Ok(" Device Add Successfully! ");
- 
+            return Ok(" Device Add Successfully! ");
+
         }
 
         [HttpDelete("/Delete/{ID}")]
@@ -47,12 +47,38 @@ namespace RoboCare.API.Controllers
 
             if (foundDevice == null)
             {
-               return NotFound("Device not found!");
+                return NotFound("Device not found!");
             }
 
             data.Remove(foundDevice);
 
             return Ok("Device Successfuly Delete");
+        }
+
+        [HttpPut("/Update/{ID}")]
+        public IActionResult UpdateDB(int id,RoboticDevice devices)
+        {
+            var data = MockDataStore.MyData;
+
+            var foundDevice = data.FirstOrDefault(i => i.ID == id);
+
+            if (foundDevice == null)
+            {
+                return NotFound("Device not found!");
+            }
+            else
+            {
+               
+                foundDevice.Model = devices.Model;
+                foundDevice.SerialNumber = devices.SerialNumber;
+                foundDevice.LastCalibrationDate = devices.LastCalibrationDate;
+                foundDevice.IsActive = devices.IsActive;
+
+
+                return Ok(" Device Update Successfuly! ");
+            }
+
+            
         }
     }
 }
