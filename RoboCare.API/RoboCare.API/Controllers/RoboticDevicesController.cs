@@ -22,7 +22,7 @@ namespace RoboCare.API.Controllers
         {
             var data = MockDataStore.MyData;
 
-            var foundDevice = data.FirstOrDefault(i => i.ID == id);
+           var foundDevice = data.FirstOrDefault(i => i.ID == id);
 
             return Ok(foundDevice);
         }
@@ -36,6 +36,23 @@ namespace RoboCare.API.Controllers
 
            return Ok(" Device Add Successfully! ");
  
+        }
+
+        [HttpDelete("/Delete/{ID}")]
+        public IActionResult DeleteDB(int id)
+        {
+            var data = MockDataStore.MyData;
+
+            var foundDevice = data.FirstOrDefault(i => i.ID == id);
+
+            if (foundDevice == null)
+            {
+               return NotFound("Device not found!");
+            }
+
+            data.Remove(foundDevice);
+
+            return Ok("Device Successfuly Delete");
         }
     }
 }
