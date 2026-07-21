@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using RoboCare.API.Data;
-using RoboCare.API.Models;
+using RoboCare.ServiceContracts.Models;
 using Services;
 using ServiceContracts;
 
@@ -11,20 +10,27 @@ namespace RoboCare.API.Controllers
     [ApiController]
     public class RoboticDevicesController : ControllerBase
     {
+        private readonly IRoboticDeviceService _roboticDeviceService;
 
+
+        public RoboticDevicesController(IRoboticDeviceService roboticDeviceService)
+        {
+            _roboticDeviceService = roboticDeviceService;
+        }
 
         [Route("/List")]
         public IActionResult Index()
         {
-            return Ok(MockDataStore.MyData);
+            List<RoboticDevice> Robots = _roboticDeviceService.GetRobots();
+            return Ok(Robots);
         }
 
         [Route("/List/{ID}")]
         public IActionResult FoundDB(int id)
         {
-            var data = MockDataStore.MyData;
+           var Robots = _roboticDeviceService.GetRobots();
 
-            var foundDevice = data.FirstOrDefault(i => i.ID == id);
+            var foundDevice = Robots.FirstOrDefault(i => i.ID == id);
 
             return Ok(foundDevice);
         }
@@ -32,27 +38,26 @@ namespace RoboCare.API.Controllers
         [HttpPost("/Add")]
         public IActionResult AddToDB(RoboticDevice devices)
         {
-            var data = MockDataStore.MyData;
+            var Robots = _roboticDeviceService.GetRobots();
 
-            data.Add(devices);
+            Robots.Add(devices);
 
-            return Ok(" Device Add Successfully! ");
-
+            return Ok("Device Add Successfully!");
         }
 
         [HttpDelete("/Delete/{ID}")]
         public IActionResult DeleteDB(int id)
         {
-            var data = MockDataStore.MyData;
+            var Robots = _roboticDeviceService.GetRobots();
 
-            var foundDevice = data.FirstOrDefault(i => i.ID == id);
+            var foundDevice = Robots.FirstOrDefault(i => i.ID == id);
 
             if (foundDevice == null)
             {
                 return NotFound("Device not found!");
             }
 
-            data.Remove(foundDevice);
+            Robots.Remove(foundDevice);
 
             return Ok("Device Successfuly Delete");
         }
@@ -60,9 +65,9 @@ namespace RoboCare.API.Controllers
         [HttpPut("/Update/{ID}")]
         public IActionResult UpdateDB(int id,RoboticDevice devices)
         {
-            var data = MockDataStore.MyData;
+            var Robots = _roboticDeviceService.GetRobots();
 
-            var foundDevice = data.FirstOrDefault(i => i.ID == id);
+            var foundDevice = Robots.FirstOrDefault(i => i.ID == id);
 
             if (foundDevice == null)
             {

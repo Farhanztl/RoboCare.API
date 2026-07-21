@@ -23,10 +23,22 @@ namespace Services
             };
         }
 
+        public void AddRobot(RoboticDevice devices)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void DeleteRobot(int id)
+        {
+            throw new NotImplementedException();
+        }
+
         public List<RoboticDevice> GetRobots()
         {
             return _RoboticDevice;
         }
+
+        
     }
    
 }
