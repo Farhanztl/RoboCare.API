@@ -1,3 +1,5 @@
 <Solution>
   <Project Path="RoboCare.API/RoboCare.API.csproj" />
+  <Project Path="ServiceContracts/Services.csproj" Id="dcbbad79-42ac-4384-b21f-561ad18c5f99" />
+  <Project Path="Services/ServiceContracts.csproj" Id="3f1cbab3-24bf-4360-91ca-f4abce334f09" />
 </Solution>

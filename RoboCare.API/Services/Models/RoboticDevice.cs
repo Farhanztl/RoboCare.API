@@ -1,7 +1,8 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using ServiceContracts;
 
 
-namespace RoboCare.API.Models
+namespace RoboCare.ServiceContracts.Models
 {
     public class RoboticDevice
     {
@@ -10,16 +11,15 @@ namespace RoboCare.API.Models
         public int ID { get; set; }
 
         [Required(ErrorMessage = "Please give your Model")]
-        public string Model { get; set; }
+        public string? Model { get; set; }
 
         [Required(ErrorMessage = "Please give your SerialNumber")]
-        public string SerialNumber { get; set; }
+        public string? SerialNumber { get; set; }
 
         [Required(ErrorMessage = "Please give your DateTime")]
         public DateTime LastCalibrationDate { get; set; }
 
         [Required(ErrorMessage = "Please give your Activity Situation")]
         public bool IsActive { get; set; }
-
     }
 }

@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using RoboCare.API.Data;
 using RoboCare.API.Models;
+using Services;
+using ServiceContracts;
 
 
 namespace RoboCare.API.Controllers
@@ -67,18 +69,14 @@ namespace RoboCare.API.Controllers
                 return NotFound("Device not found!");
             }
             else
-            {
-               
+            { 
                 foundDevice.Model = devices.Model;
                 foundDevice.SerialNumber = devices.SerialNumber;
                 foundDevice.LastCalibrationDate = devices.LastCalibrationDate;
                 foundDevice.IsActive = devices.IsActive;
 
-
                 return Ok(" Device Update Successfuly! ");
             }
-
-            
         }
     }
 }
