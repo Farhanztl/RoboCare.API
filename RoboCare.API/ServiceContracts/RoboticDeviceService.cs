@@ -6,6 +6,7 @@ namespace Services
     public class RoboticDeviceService : IRoboticDeviceService
     {
 
+
         private List<RoboticDevice> _RoboticDevice;
 
         public RoboticDeviceService()
@@ -23,14 +24,23 @@ namespace Services
             };
         }
 
-        public void AddRobot(RoboticDevice devices)
+        public void AddRobot(RoboticDevice device)
         {
-            throw new NotImplementedException();
+            _RoboticDevice.Add(device);
         }
 
-        public void DeleteRobot(int id)
+        public bool DeleteRobot(int id)
         {
-            throw new NotImplementedException();
+            var foundDevice = GetRobotById(id); // aval peidash mikone
+            if (foundDevice == null) return false; // age nabood mige nmitnm
+
+            _RoboticDevice.Remove(foundDevice); // age bood pakesh mikone
+            return true; // mige ba movafaghiat pak shod
+        }
+
+        public RoboticDevice GetRobotById(int id)
+        {
+            return _RoboticDevice.FirstOrDefault(i => i.ID == id);
         }
 
         public List<RoboticDevice> GetRobots()
@@ -38,7 +48,18 @@ namespace Services
             return _RoboticDevice;
         }
 
-        
+        public bool UpdateRobot(int id, RoboticDevice updatedDevice)
+        {
+            var foundDevice = GetRobotById(id);
+            if (foundDevice == null) return false;
+
+            foundDevice.Model = updatedDevice.Model;
+            foundDevice.SerialNumber = updatedDevice.SerialNumber;
+            foundDevice.LastCalibrationDate = updatedDevice.LastCalibrationDate;
+            foundDevice.IsActive = updatedDevice.IsActive;
+
+            return true;
+        }    
     }
    
 }
