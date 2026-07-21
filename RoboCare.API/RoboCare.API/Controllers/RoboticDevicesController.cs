@@ -10,78 +10,60 @@ namespace RoboCare.API.Controllers
     [ApiController]
     public class RoboticDevicesController : ControllerBase
     {
-        private readonly IRoboticDeviceService _roboticDeviceService;
+        private readonly IRoboticDeviceService _service;
 
-
-        public RoboticDevicesController(IRoboticDeviceService roboticDeviceService)
+            
+        public RoboticDevicesController(IRoboticDeviceService service)
         {
-            _roboticDeviceService = roboticDeviceService;
+            _service = service;
         }
 
         [Route("/List")]
         public IActionResult Index()
         {
-            List<RoboticDevice> Robots = _roboticDeviceService.GetRobots();
-            return Ok(Robots);
+            return Ok(_service.GetRobots());
         }
 
         [Route("/List/{ID}")]
         public IActionResult FoundDB(int id)
         {
-           var Robots = _roboticDeviceService.GetRobots();
+            var device = _service.GetRobotById(id);
 
-            var foundDevice = Robots.FirstOrDefault(i => i.ID == id);
+            if (device == null)
+            {
+                return NotFound("Device not found!");
+            }
 
-            return Ok(foundDevice);
+            return Ok(device);
         }
 
         [HttpPost("/Add")]
-        public IActionResult AddToDB(RoboticDevice devices)
+        public IActionResult AddToDB(RoboticDevice device)
         {
-            var Robots = _roboticDeviceService.GetRobots();
-
-            Robots.Add(devices);
-
-            return Ok("Device Add Successfully!");
+            _service.AddRobot(device);
+            return Ok("Device Added Successfully!");
         }
 
         [HttpDelete("/Delete/{ID}")]
         public IActionResult DeleteDB(int id)
         {
-            var Robots = _roboticDeviceService.GetRobots();
+            //Be service migim pakesh kon. Agar false bargardoone yani roboti naboode
+            bool isDeleted = _service.DeleteRobot(id);
 
-            var foundDevice = Robots.FirstOrDefault(i => i.ID == id);
+            if (!isDeleted) return NotFound("Device not found!");
 
-            if (foundDevice == null)
-            {
-                return NotFound("Device not found!");
-            }
-
-            Robots.Remove(foundDevice);
-
-            return Ok("Device Successfuly Delete");
+            return Ok("Device Successfully Deleted");
         }
 
         [HttpPut("/Update/{ID}")]
-        public IActionResult UpdateDB(int id,RoboticDevice devices)
+        public IActionResult UpdateDB(int id,RoboticDevice device)
         {
-            var Robots = _roboticDeviceService.GetRobots();
+            // Be Service migim Updatesh kon
+            bool isUpdated = _service.UpdateRobot(id, device);
 
-            var foundDevice = Robots.FirstOrDefault(i => i.ID == id);
+            if (!isUpdated) return NotFound("Device not found!");
 
-            if (foundDevice == null)
-            {
-                return NotFound("Device not found!");
-            }
-            else
-            { 
-                foundDevice.Model = devices.Model;
-                foundDevice.SerialNumber = devices.SerialNumber;
-                foundDevice.LastCalibrationDate = devices.LastCalibrationDate;
-                foundDevice.IsActive = devices.IsActive;
-
-                return Ok(" Device Update Successfuly! ");
-            }
+            return Ok("Device Updated Successfully!");
         }
     }
 }
