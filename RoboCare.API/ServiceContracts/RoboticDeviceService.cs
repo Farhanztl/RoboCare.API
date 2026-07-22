@@ -21,6 +21,7 @@ namespace Services
                 new RoboticDevice() {ID = 5,Model = "Robo",SerialNumber = "C1000",LastCalibrationDate = new DateTime(2025,12,12), IsActive = true},
                 new RoboticDevice() {ID = 7,Model = "Flex",SerialNumber = "B1004",LastCalibrationDate = new DateTime(2008,08,16), IsActive = false},
                 new RoboticDevice() {ID = 8,Model = "SIM",SerialNumber = "A1002",LastCalibrationDate = new DateTime(2020,11,11), IsActive = true}
+
             };
         }
 
